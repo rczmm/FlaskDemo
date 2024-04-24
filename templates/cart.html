@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+<body>
+<h1>Shopping Cart</h1>
+<ul id="cart_items">
+    <!-- 购物车内容将在这里动态添加 -->
+</ul>
+<p>Total Price: $<span id="total_price"></span></p>
+
+<script>
+    // 获取购物车内容并动态添加到页面
+    fetch('/get_cart')
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data)
+
+            const cartItems = data.cart;
+            const cartList = document.getElementById('cart_items');
+            const totalPrice = data.total_price;
+
+            console.log(totalPrice);
+
+            cartItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - Quantity: ${item.quantity}, Price: ${item.price}`;
+                cartList.appendChild(li);
+            });
+            document.getElementById('total_price').textContent = totalPrice;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+</script>
+</body>
+</html>

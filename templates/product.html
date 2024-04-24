@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ product.name }}</title>
+</head>
+<body>
+<h1>{{ product.name }}</h1>
+<p>Price: {{ product.price }}</p>
+<button id="like-btn">{{ "已点赞" if liked else "点赞" }}</button>
+<button onclick="location.href='/add_to_cart/'+{{ product_id }} ">加入购物车</button>
+<button onclick="location.href='/cart'">查看购物车</button>
+
+<script>
+    document.getElementById('like-btn').addEventListener('click', function () {
+        fetch(`/toggle_like/{{ product_id }}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                document.getElementById('like-btn').innerText = data.liked ? " 已点赞" : "点赞";
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    });
+
+</script>
+
+</body>
+</html>

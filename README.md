@@ -14,6 +14,7 @@
 
 ```bash
 pip install -r requirements.txt
+```
 
 ## 数据库设置
 在 MySQL 中创建一个数据库，并执行以下命令创建所需的表：
@@ -40,10 +41,12 @@ CREATE TABLE cart (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+```
 
 ## 运行应用
 ```bash
 python app.py
+```
 
 ## 功能实现
 用户登录用户可以通过提供用户名和密码登录到系统中。
